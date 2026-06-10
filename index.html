@@ -9,43 +9,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0c0c0e;            /* studio black */
-    --panel:#141417;
-    --panel-2:#19191d;
-    --line:#2a2a30;
-    --white:#f4f4f5;
-    --dim:#9a9aa3;
-    --net-red:#d2232a;        /* broadcast red */
-    --net-red-dk:#9e1117;
-    --red-glow:rgba(210,35,42,.4);
-    --gold:#ffc107;           /* close-guess yellow only */
-    --green:#2fbf71;
-    --bad:#ff5252;
-    --radius:8px;
+    --bg:#0c0c0e; --panel:#141417; --panel-2:#19191d; --line:#2a2a30;
+    --white:#f4f4f5; --dim:#9a9aa3;
+    --net-red:#d2232a; --net-red-dk:#9e1117; --red-glow:rgba(210,35,42,.4);
+    --gold:#ffc107; --green:#2fbf71; --bad:#ff5252;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html,body{background:var(--bg);color:var(--white);font-family:'Archivo',system-ui,sans-serif;min-height:100%}
   body{display:flex;justify-content:center;padding:0 0 64px}
   .app{width:100%;max-width:440px;padding:0 16px}
 
-  /* ---------- broadcast header / score bug ---------- */
-  header{margin:0 -16px 20px;background:#000;border-bottom:3px solid var(--net-red)}
+  header{margin:0 -16px 14px;background:#000;border-bottom:3px solid var(--net-red)}
   .topstripe{height:6px;background:linear-gradient(90deg,var(--net-red) 0%,var(--net-red) 70%,var(--net-red-dk) 70%,var(--net-red-dk) 100%)}
   .brand-row{padding:16px 20px 12px}
-  .brand{
-    font-weight:900;font-style:italic;font-stretch:72%;
-    font-size:clamp(28px,7.5vw,34px);
-    letter-spacing:.01em;text-transform:uppercase;line-height:1;
-    display:inline-block;
-  }
+  .brand{font-weight:900;font-style:italic;font-stretch:72%;font-size:clamp(28px,7.5vw,34px);letter-spacing:.01em;text-transform:uppercase;line-height:1;display:inline-block}
   .brand .accent{color:var(--net-red)}
   .tagline{color:var(--dim);font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:6px;font-style:italic;font-weight:600}
-
-  .scorebug{
-    display:flex;margin:12px 20px 16px;
-    border:1px solid var(--line);border-radius:6px;overflow:hidden;
-    background:var(--panel);
-  }
+  .scorebug{display:flex;margin:12px 20px 14px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel)}
   .bug-cell{flex:1;padding:7px 8px 9px;text-align:center;border-right:1px solid var(--line)}
   .bug-cell:last-child{border-right:0}
   .bug-cell .lbl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:700}
@@ -53,38 +33,28 @@
   .bug-cell.hot{background:var(--net-red)}
   .bug-cell.hot .lbl{color:rgba(255,255,255,.75)}
   .bug-cell.hot .val{color:#fff}
-  .bug-cell .val.dim{color:#5d5d66}
 
-  /* ---------- chyron section tags ---------- */
-  .section-tag{
-    display:flex;align-items:center;gap:0;margin:22px 0 10px;
-    font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;font-style:italic;
-  }
+  /* mode tabs */
+  .tabs{display:flex;gap:8px;margin:0 0 6px}
+  .tab{flex:1;font-family:'Archivo',sans-serif;font-weight:800;font-style:italic;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 0;cursor:pointer;transition:color .15s,border-color .15s}
+  .tab.active{color:#fff;background:var(--net-red);border-color:var(--net-red)}
+  .tab:focus-visible{outline:2px solid var(--net-red);outline-offset:2px}
+
+  .section-tag{display:flex;align-items:center;margin:18px 0 10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;font-style:italic}
   .section-tag .chip{background:var(--net-red);color:#fff;padding:4px 10px 4px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 8px) 100%,0 100%)}
   .section-tag .rest{color:var(--dim);padding:4px 0 4px 10px;flex:1;border-bottom:1px solid var(--line)}
 
-  /* ---------- closed-caption call stack ---------- */
   .cc-stack{display:flex;flex-direction:column;gap:8px}
   .cc-bar{background:#000;color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:15px;line-height:1.5;padding:10px 14px;border-radius:4px;border-left:3px solid var(--net-red);animation:ccIn .35s ease}
   @keyframes ccIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .cc-locked{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--panel);border:1px dashed #3a3a42;border-radius:4px;padding:8px 8px 8px 14px}
   .cc-locked .static{color:#3f3f48;font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:2px;overflow:hidden;white-space:nowrap}
-  .reveal-btn{font-family:'Archivo',sans-serif;font-weight:800;font-style:italic;font-size:12px;letter-spacing:.06em;color:#fff;background:var(--net-red);border:0;border-radius:4px;padding:8px 13px;cursor:pointer;white-space:nowrap;transition:background .15s}
+  .reveal-btn{font-family:'Archivo',sans-serif;font-weight:800;font-style:italic;font-size:11px;letter-spacing:.05em;color:#fff;background:var(--net-red);border:0;border-radius:4px;padding:8px 11px;cursor:pointer;white-space:nowrap;transition:background .15s}
   .reveal-btn:hover{background:var(--net-red-dk)}
   .reveal-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
-  .reveal-btn:disabled{opacity:.35;cursor:default}
 
-  /* ---------- guess history ---------- */
-  .history{display:flex;flex-direction:column;gap:6px;margin-top:14px}
-  .h-row{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;background:var(--panel);border:1px solid var(--line);border-left-width:4px;border-radius:6px;padding:8px 12px;animation:ccIn .3s ease}
-  .h-row .yr{font-variant-numeric:tabular-nums}
-  .h-row .hint{margin-left:auto;font-size:11px;color:var(--dim);font-family:'Archivo',sans-serif;font-weight:700;font-style:italic;letter-spacing:.06em;text-transform:uppercase}
-  .h-row.r-red{border-left-color:var(--bad)}
-  .h-row.r-yellow{border-left-color:var(--gold)}
-  .h-row.r-green{border-left-color:var(--green)}
-
-  /* ---------- timeline slider entry ---------- */
-  .entry{margin-top:18px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:18px 16px 16px}
+  .entry{margin-top:16px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:18px 16px 16px}
+  .one-shot{text-align:center;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:8px}
   .yr-readout{text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:46px;color:var(--white);font-variant-numeric:tabular-nums;line-height:1.1;margin-bottom:2px}
   .yr-underline{width:90px;height:4px;background:var(--net-red);margin:0 auto 16px;border-radius:2px}
   .slider-wrap{padding:0 4px}
@@ -103,15 +73,15 @@
   .lock-btn:hover{background:var(--net-red-dk)}
   .lock-btn:active{transform:scale(.98)}
   .lock-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
-  .lock-btn:disabled,.nudge:disabled{opacity:.35;cursor:default;transform:none}
 
-  /* ---------- endgame ---------- */
   .result-banner{margin-top:20px;text-align:center;border-radius:10px;padding:18px 16px;border:1px solid var(--line);background:var(--panel-2);border-top:4px solid var(--net-red);animation:ccIn .4s ease}
   .result-banner h2{font-weight:900;font-style:italic;font-stretch:72%;text-transform:uppercase;letter-spacing:.02em;font-size:26px;line-height:1.1}
   .result-banner h2.win{color:var(--green)}
+  .result-banner h2.close{color:var(--gold)}
   .result-banner h2.loss{color:var(--bad)}
-  .result-banner .sub{color:var(--dim);font-size:14px;margin-top:6px;line-height:1.5}
+  .result-banner .sub{color:var(--dim);font-size:14px;margin-top:6px;line-height:1.6}
   .result-banner .sub strong{color:var(--white)}
+  .math{margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--white);background:#000;border-radius:6px;padding:8px 10px;display:inline-block}
 
   .video-wrap{margin-top:14px;border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;background:#000;animation:ccIn .4s ease}
   .video-wrap iframe{width:100%;height:100%;border:0;display:block}
@@ -135,35 +105,32 @@
   .final{margin-top:8px;text-align:center;background:var(--panel-2);border:1px solid var(--net-red);border-radius:10px;padding:18px;animation:ccIn .4s ease}
   .final .lbl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-weight:700}
   .final .big{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:44px;color:var(--white);font-variant-numeric:tabular-nums;line-height:1.1}
-  .share-btn{margin-top:12px;font-family:'Archivo',sans-serif;font-weight:900;font-style:italic;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--net-red);border:0;border-radius:6px;padding:12px 22px;cursor:pointer}
+  .final .next-note{color:var(--dim);font-size:13px;margin-top:8px}
+  .btn-row{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+  .share-btn,.again-btn{font-family:'Archivo',sans-serif;font-weight:900;font-style:italic;font-size:14px;letter-spacing:.08em;text-transform:uppercase;border:0;border-radius:6px;padding:12px 20px;cursor:pointer}
+  .share-btn{color:#fff;background:var(--net-red)}
   .share-btn:hover{background:var(--net-red-dk)}
-  .share-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
-  .footer-note{margin-top:26px;text-align:center;color:#55555e;font-size:11px;letter-spacing:.06em;line-height:1.6}
+  .again-btn{color:var(--white);background:var(--panel);border:1px solid var(--line)}
+  .again-btn:hover{border-color:var(--net-red)}
+  .share-btn:focus-visible,.again-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
 
-  /* ---------- bottom-line ticker ---------- */
-  .ticker{
-    position:fixed;left:0;right:0;bottom:0;z-index:50;
-    background:#000;border-top:2px solid var(--net-red);
-    display:flex;align-items:stretch;overflow:hidden;height:34px;
-  }
-  .ticker .tk-label{
-    flex:0 0 auto;display:flex;align-items:center;
-    background:var(--net-red);color:#fff;
-    font-weight:900;font-style:italic;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-    padding:0 12px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%);
-  }
+  /* archive */
+  .arch-list{display:flex;flex-direction:column;gap:8px}
+  .arch-row{display:flex;justify-content:space-between;align-items:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;color:var(--white);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:13px 14px;cursor:pointer;transition:border-color .15s}
+  .arch-row:hover{border-color:var(--net-red)}
+  .arch-row:focus-visible{outline:2px solid var(--net-red);outline-offset:2px}
+  .arch-row .num{font-family:'IBM Plex Mono',monospace;color:var(--net-red)}
+  .arch-row .dt{color:var(--dim);font-size:13px;font-weight:600}
+
+  .footer-note{margin-top:26px;text-align:center;color:#55555e;font-size:11px;letter-spacing:.06em;line-height:1.6}
+  .ticker{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#000;border-top:2px solid var(--net-red);display:flex;align-items:stretch;overflow:hidden;height:34px}
+  .ticker .tk-label{flex:0 0 auto;display:flex;align-items:center;background:var(--net-red);color:#fff;font-weight:900;font-style:italic;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:0 12px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%)}
   .ticker .tk-track{flex:1;overflow:hidden;display:flex;align-items:center}
-  .ticker .tk-text{
-    white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);
-    animation:tick 22s linear infinite;padding-left:100%;
-  }
+  .ticker .tk-text{white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);animation:tick 24s linear infinite;padding-left:100%}
   @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
   .hidden{display:none !important}
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none !important;transition:none !important}
-    .ticker .tk-text{padding-left:0}
-  }
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.ticker .tk-text{padding-left:0}}
 </style>
 </head>
 <body>
@@ -172,190 +139,254 @@
     <div class="topstripe"></div>
     <div class="brand-row">
       <div class="brand">Booth <span class="accent">Review</span></div>
-      <div class="tagline">Hear the call · Name the year</div>
+      <div class="tagline">Read the call · Name the year · One shot</div>
     </div>
     <div class="scorebug">
-      <div class="bug-cell hot"><div class="lbl">Score</div><div class="val" id="scoreVal">500</div></div>
-      <div class="bug-cell"><div class="lbl">Guesses</div><div class="val" id="guessVal">5</div></div>
-      <div class="bug-cell"><div class="lbl">Puzzle</div><div class="val dim">#001</div></div>
+      <div class="bug-cell hot"><div class="lbl">Max Pts</div><div class="val" id="maxVal">1000</div></div>
+      <div class="bug-cell"><div class="lbl">Reveals</div><div class="val" id="revVal">1/4</div></div>
+      <div class="bug-cell"><div class="lbl">Call</div><div class="val" id="modeVal">#001</div></div>
     </div>
   </header>
 
-  <div id="phase1">
-    <div class="section-tag"><span class="chip">Live</span><span class="rest">The call · play-by-play feed</span></div>
-    <div class="cc-stack" id="ccStack"></div>
-    <div class="history" id="history"></div>
+  <div class="tabs">
+    <button class="tab active" id="tabDaily">Daily</button>
+    <button class="tab" id="tabRandom">Random</button>
+    <button class="tab" id="tabArchive">Archive</button>
+  </div>
 
-    <div class="entry" id="entry">
-      <div class="yr-readout" id="yrReadout">1985</div>
-      <div class="yr-underline"></div>
-      <div class="slider-wrap">
-        <input type="range" id="yrSlider" min="1940" max="2026" step="1" value="1985" aria-label="Year guess">
-        <div class="ticks"><span>1940</span><span>1960</span><span>1980</span><span>2000</span><span>2026</span></div>
+  <!-- ARCHIVE PANEL -->
+  <div id="archivePanel" class="hidden">
+    <div class="section-tag"><span class="chip">Vault</span><span class="rest">Every call so far · replay any day</span></div>
+    <div class="arch-list" id="archList"></div>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameArea">
+    <div id="phase1">
+      <div class="section-tag"><span class="chip">Live</span><span class="rest">The call · play-by-play feed</span></div>
+      <div class="cc-stack" id="ccStack"></div>
+
+      <div class="entry" id="entry">
+        <div class="one-shot">One guess · Make it count</div>
+        <div class="yr-readout" id="yrReadout">1985</div>
+        <div class="yr-underline"></div>
+        <div class="slider-wrap">
+          <input type="range" id="yrSlider" min="1940" max="2026" step="1" value="1985" aria-label="Year guess">
+          <div class="ticks"><span>1940</span><span>1960</span><span>1980</span><span>2000</span><span>2026</span></div>
+        </div>
+        <div class="entry-actions">
+          <button class="nudge" id="minus" aria-label="Minus one year">&minus;1</button>
+          <button class="lock-btn" id="goBtn">LOCK IT IN</button>
+          <button class="nudge" id="plus" aria-label="Plus one year">+1</button>
+        </div>
       </div>
-      <div class="entry-actions">
-        <button class="nudge" id="minus" aria-label="Minus one year">&minus;1</button>
-        <button class="lock-btn" id="goBtn">LOCK IT IN</button>
-        <button class="nudge" id="plus" aria-label="Plus one year">+1</button>
+    </div>
+
+    <div id="endZone" class="hidden">
+      <div class="result-banner">
+        <h2 id="resultTitle"></h2>
+        <div class="sub" id="resultSub"></div>
+        <div class="math" id="mathLine"></div>
+      </div>
+      <div class="section-tag"><span class="chip">Replay</span><span class="rest">The moment · watch the real call</span></div>
+      <div class="video-wrap" id="videoWrap"></div>
+      <div class="watch-row"><a class="watch-link hidden" id="watchLink" target="_blank" rel="noopener">Can't see it? Watch on YouTube ↗</a></div>
+
+      <div class="bonus">
+        <div class="section-tag"><span class="chip">Bonus</span><span class="rest">Die-hard round</span></div>
+        <div class="bq"><div class="q">Who made the call? <span class="pts">+100</span></div><div class="choices" id="q1"></div></div>
+        <div class="bq"><div class="q">Who won it? <span class="pts">+100</span></div><div class="choices" id="q2"></div></div>
+      </div>
+
+      <div class="final hidden" id="finalBox">
+        <div class="lbl">Final score</div>
+        <div class="big" id="finalScore">0</div>
+        <div class="next-note" id="nextNote"></div>
+        <div class="btn-row">
+          <button class="share-btn" id="shareBtn">Copy result</button>
+          <button class="again-btn hidden" id="againBtn">Another random</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <div id="endZone" class="hidden">
-    <div class="result-banner">
-      <h2 id="resultTitle"></h2>
-      <div class="sub" id="resultSub"></div>
-    </div>
-    <div class="section-tag"><span class="chip">Replay</span><span class="rest">The moment · watch the real call</span></div>
-    <div class="video-wrap" id="videoWrap"></div>
-    <div class="watch-row"><a class="watch-link hidden" id="watchLink" target="_blank" rel="noopener">Can't see it? Watch on YouTube ↗</a></div>
-
-    <div class="bonus" id="bonus">
-      <div class="section-tag"><span class="chip">Bonus</span><span class="rest">Die-hard round</span></div>
-      <div class="bq"><div class="q">Who made the call? <span class="pts">+100</span></div><div class="choices" id="q1"></div></div>
-      <div class="bq"><div class="q">Who won it? <span class="pts">+100</span></div><div class="choices" id="q2"></div></div>
-    </div>
-
-    <div class="final hidden" id="finalBox">
-      <div class="lbl">Final score</div>
-      <div class="big" id="finalScore">0</div>
-      <button class="share-btn" id="shareBtn">Copy result</button>
-    </div>
-  </div>
-
-  <div class="footer-note">BOOTH REVIEW · v1 prototype · one puzzle, no saves<br>video plays via official YouTube embed</div>
+  <div class="footer-note">BOOTH REVIEW · daily + random modes · no saves yet<br>video plays via official YouTube embed</div>
 </div>
 
 <div class="ticker" aria-hidden="true">
   <div class="tk-label">Bottom Line</div>
-  <div class="tk-track"><div class="tk-text">BOOTH REVIEW #001 · A NEW CALL EVERY DAY · GUESS EARLY, SCORE BIG · REVEALS COST 100 · WRONG GUESSES COST 50 · NAIL THE BONUS ROUND FOR +200 ·&nbsp;</div></div>
+  <div class="tk-track"><div class="tk-text">BOOTH REVIEW · ONE GUESS, SCORED ON HOW CLOSE YOU LAND · EVERY REVEAL LOWERS YOUR MAX · EXACT YEAR OFF ONE CLUE = 1000 · BONUS ROUND +200 · NEW CALL EVERY DAY ·&nbsp;</div></div>
 </div>
 
 <script>
 (function(){
   "use strict";
 
-  var PUZZLE = {
-    number: 1,
-    year: 2016,
-    chunks: [
-      "\u201CIrving drives, hop-steps inside, floats it up...\u201D",
-      "\u201Cmisses, rebound taken by Iguodala,\u201D",
-      "\u201CIguodala to Curry, back to Iguodala,\u201D",
-      "\u201Cup for the layup \u2014 OH! BLOCKED BY JAMES!\u201D"
-    ],
-    video: "https://www.youtube-nocookie.com/embed/Hgade7_mjHc?start=4",
-    watch: "https://www.youtube.com/watch?v=Hgade7_mjHc&t=4s",
-    q1: { options:["Mike Breen","Marv Albert","Kevin Harlan"], answer:0 },
-    q2: { options:["Cleveland Cavaliers","Golden State Warriors","Miami Heat"], answer:0 },
-    eventLine: "2016 NBA Finals, Game 7 \u2014 Cleveland 93, Golden State 89."
-  };
+  /* ============ PUZZLE LIBRARY ============
+     Day 1 = EPOCH date. PUZZLES[0] is Day #001.
+     Add new puzzles to the end; daily mode advances automatically. */
+  var EPOCH = { y:2026, m:5, d:10 };  // June 10, 2026 (month is 0-indexed)
 
-  var START_SCORE=500, REVEAL_COST=100, WRONG_PENALTY=50, MAX_GUESSES=5;
-  var CLOSE_RANGE=5, BONUS_PTS=100;
+  var PUZZLES = [
+    {
+      year: 2016,
+      chunks: [
+        "\u201CIrving drives, hop-steps inside, floats it up...\u201D",
+        "\u201Cmisses, rebound taken by Iguodala,\u201D",
+        "\u201CIguodala to Curry, back to Iguodala,\u201D",
+        "\u201Cup for the layup \u2014 OH! BLOCKED BY JAMES!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/Hgade7_mjHc?start=4",
+      watch: "https://www.youtube.com/watch?v=Hgade7_mjHc&t=4s",
+      q1: { options:["Mike Breen","Marv Albert","Kevin Harlan"], answer:0 },
+      q2: { options:["Cleveland Cavaliers","Golden State Warriors","Miami Heat"], answer:0 },
+      eventLine: "2016 NBA Finals, Game 7 \u2014 Cleveland 93, Golden State 89."
+    },
+    {
+      year: 2012,
+      chunks: [
+        "\u201CIt's finished at Sunderland.\u201D",
+        "\u201CManchester United have done all they can, that Rooney goal was enough for the 3 points...\u201D",
+        "\u201CManchester City are still alive here... Balotelli...\u201D",
+        "\u201CAGUEROOOOOOOOOOOOO! I swear you'll never see anything like this ever again! So watch it! Drink it in!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/39VJVyKhbGM",
+      watch: "https://www.youtube.com/shorts/39VJVyKhbGM",
+      /* fallback if the Short ever dies (compilation, leaky):
+         https://www.youtube-nocookie.com/embed/xOt9dmkydwM?start=500&end=529 */
+      q1: { options:["Martin Tyler","Peter Drury","Ray Hudson"], answer:0 },
+      q2: { options:["Manchester City","Manchester United","QPR"], answer:0 },
+      eventLine: "Premier League final day 2012 \u2014 City 3, QPR 2. Title won in stoppage time."
+    }
+  ];
 
-  var score=START_SCORE, guessesLeft=MAX_GUESSES, revealed=1;
-  var over=false, won=false, revealHistory=[], bonusDone=0;
+  /* ============ SCORING ============ */
+  var MAX_PTS = 1000, PER_YEAR = 100;            // closeness: 1000 - 100/yr off, floor 0
+  var MULT = [1.00, 0.85, 0.70, 0.55];            // multiplier by reveals used (1..4)
+  var BONUS_PTS = 100;
+
+  /* ============ STATE ============ */
+  var mode = "daily";          // daily | random | archive-play
+  var puzzleIdx = 0;
+  var P = null;
+  var revealed = 1, over = false, score = 0, offBy = 0, bonusDone = 0;
 
   function $(id){return document.getElementById(id);}
-  var ccStack=$("ccStack"), historyEl=$("history"), scoreVal=$("scoreVal"),
-      guessVal=$("guessVal"), goBtn=$("goBtn"),
-      slider=$("yrSlider"), readout=$("yrReadout"),
-      minusBtn=$("minus"), plusBtn=$("plus");
 
+  /* ---- day math ---- */
+  function todayIndex(){
+    var now = new Date();
+    var a = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    var e = Date.UTC(EPOCH.y, EPOCH.m, EPOCH.d);
+    return Math.floor((a - e) / 86400000);
+  }
+  function releasedIndex(){
+    var t = todayIndex();
+    if(t < 0) t = 0;
+    return Math.min(t, PUZZLES.length - 1);
+  }
+  function dayDate(i){
+    var d = new Date(Date.UTC(EPOCH.y, EPOCH.m, EPOCH.d + i));
+    return d.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"});
+  }
+  function pad3(n){ n=n+1; return (n<10?"00":n<100?"0":"")+n; }
+
+  /* ---- scorebug ---- */
+  function ceiling(){ return Math.round(MAX_PTS * MULT[revealed-1]); }
+  function renderBug(){
+    $("maxVal").textContent = over ? score : ceiling();
+    $("revVal").textContent = revealed + "/" + P.chunks.length;
+    $("modeVal").textContent = (mode==="random") ? "RND" : "#"+pad3(puzzleIdx);
+  }
+
+  /* ---- call stack ---- */
   function renderChunks(){
-    ccStack.innerHTML="";
-    for(var i=0;i<PUZZLE.chunks.length;i++){
-      if(i<revealed){
-        var d=document.createElement("div");d.className="cc-bar";d.textContent=PUZZLE.chunks[i];ccStack.appendChild(d);
+    var stack = $("ccStack");
+    stack.innerHTML = "";
+    for(var i=0;i<P.chunks.length;i++){
+      if(i < revealed){
+        var d=document.createElement("div");d.className="cc-bar";d.textContent=P.chunks[i];stack.appendChild(d);
       } else {
         var wrap=document.createElement("div");wrap.className="cc-locked";
         var ghost=document.createElement("div");ghost.className="static";ghost.textContent="\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593";
         wrap.appendChild(ghost);
         if(i===revealed && !over){
+          var nextMax = Math.round(MAX_PTS * MULT[revealed]); // ceiling after this reveal
           var btn=document.createElement("button");btn.className="reveal-btn";
-          btn.textContent="REVEAL \u2212"+REVEAL_COST;
-          btn.disabled=score<REVEAL_COST;
+          btn.textContent="REVEAL \u00B7 MAX "+nextMax;
           btn.addEventListener("click",doReveal);
           wrap.appendChild(btn);
         }
-        ccStack.appendChild(wrap);
+        stack.appendChild(wrap);
       }
     }
   }
   function doReveal(){
-    if(over||revealed>=PUZZLE.chunks.length||score<REVEAL_COST)return;
-    score-=REVEAL_COST;revealed++;renderAll();
+    if(over || revealed>=P.chunks.length) return;
+    revealed++;
+    renderChunks(); renderBug();
   }
-  function renderBoard(){scoreVal.textContent=score;guessVal.textContent=guessesLeft;}
-  function renderAll(){renderChunks();renderBoard();}
 
-  function syncReadout(){readout.textContent=slider.value;}
+  /* ---- slider ---- */
+  var slider=$("yrSlider"), readout=$("yrReadout");
+  function syncReadout(){ readout.textContent = slider.value; }
   slider.addEventListener("input",syncReadout);
-  minusBtn.addEventListener("click",function(){slider.value=Math.max(+slider.min,+slider.value-1);syncReadout();});
-  plusBtn.addEventListener("click",function(){slider.value=Math.min(+slider.max,+slider.value+1);syncReadout();});
-  goBtn.addEventListener("click",submitGuess);
+  $("minus").addEventListener("click",function(){slider.value=Math.max(+slider.min,+slider.value-1);syncReadout();});
+  $("plus").addEventListener("click",function(){slider.value=Math.min(+slider.max,+slider.value+1);syncReadout();});
+  $("goBtn").addEventListener("click",lockIn);
 
-  function submitGuess(){
-    if(over)return;
-    var g=parseInt(slider.value,10);
-    guessesLeft--;
-    var diff=g-PUZZLE.year;
-    if(diff===0){
-      revealHistory.push("\uD83D\uDFE2");addHistory(g,"green","CORRECT");won=true;endPhase1();
-    } else {
-      score=Math.max(0,score-WRONG_PENALTY);
-      var close=Math.abs(diff)<=CLOSE_RANGE;
-      revealHistory.push(close?"\uD83D\uDFE1":"\uD83D\uDD34");
-      var dir=diff>0?"go lower \u2B07":"go higher \u2B06";
-      addHistory(g,close?"yellow":"red",(close?"close \u2014 ":"way off \u2014 ")+dir);
-      if(guessesLeft<=0)endPhase1();
-    }
-    renderAll();
-  }
-  function addHistory(year,color,hint){
-    var row=document.createElement("div");row.className="h-row r-"+color;
-    var dot={red:"\uD83D\uDD34",yellow:"\uD83D\uDFE1",green:"\uD83D\uDFE2"}[color];
-    row.innerHTML='<span class="dot">'+dot+'</span><span class="yr">'+year+'</span><span class="hint">'+hint+'</span>';
-    historyEl.appendChild(row);
-  }
+  /* ---- the one guess ---- */
+  function lockIn(){
+    if(over) return;
+    over = true;
+    var g = parseInt(slider.value,10);
+    offBy = Math.abs(g - P.year);
+    var closeness = Math.max(0, MAX_PTS - PER_YEAR*offBy);
+    var mult = MULT[revealed-1];
+    score = Math.round(closeness * mult);
 
-  function endPhase1(){
-    over=true;
-    if(!won)score=0;
-    revealed=PUZZLE.chunks.length;
-    renderAll();
+    revealed = P.chunks.length;   // show the full call
+    renderChunks(); renderBug();
     $("entry").classList.add("hidden");
-    var t=$("resultTitle"),s=$("resultSub");
-    if(won){
-      t.textContent="Got it. "+PUZZLE.year+".";t.className="win";
-      s.innerHTML=PUZZLE.eventLine+" Phase 1 banked: <strong>"+score+"</strong> pts. Bonus round is live.";
+
+    var t=$("resultTitle"), s=$("resultSub"), m=$("mathLine");
+    if(offBy===0){
+      t.textContent="Nailed it. "+P.year+"."; t.className="win";
+    } else if(offBy<=2){
+      t.textContent="Off by "+offBy+". So close."; t.className="close";
     } else {
-      t.textContent="Out of guesses.";t.className="loss";
-      s.innerHTML="The year was <strong>"+PUZZLE.year+"</strong>. "+PUZZLE.eventLine+" Phase 1 scores zero, but the bonus round can still put points on the board.";
+      t.textContent="Off by "+offBy+" years."; t.className="loss";
     }
+    s.innerHTML="You said <strong>"+g+"</strong> \u00B7 It was <strong>"+P.year+"</strong>. "+P.eventLine;
+    m.textContent = closeness+" \u00D7 "+(mult*100)+"% ("+(revealed)+"/"+P.chunks.length+" shown) = "+score;
+
     renderVideo();
-    buildBonus("q1",PUZZLE.q1);
-    buildBonus("q2",PUZZLE.q2);
+    buildBonus("q1",P.q1);
+    buildBonus("q2",P.q2);
     $("endZone").classList.remove("hidden");
     $("endZone").scrollIntoView({behavior:"smooth",block:"start"});
   }
 
+  /* ---- video ---- */
   function renderVideo(){
     var wrap=$("videoWrap"), link=$("watchLink");
-    if(PUZZLE.video){
+    wrap.innerHTML="";
+    if(P.video){
       var f=document.createElement("iframe");
-      f.id="payoff";f.title="The real call";f.loading="lazy";
+      f.title="The real call";f.loading="lazy";
       f.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
       f.setAttribute("allowfullscreen","");
-      f.src=PUZZLE.video;
+      f.src=P.video;
       wrap.appendChild(f);
     }
-    if(PUZZLE.watch){ link.href=PUZZLE.watch; link.classList.remove("hidden"); }
+    if(P.watch){ link.href=P.watch; link.classList.remove("hidden"); }
+    else { link.classList.add("hidden"); }
   }
 
+  /* ---- bonus ---- */
   function buildBonus(slot,q){
     var box=$(slot);
+    box.innerHTML="";
     var idx=q.options.map(function(_,i){return i;});
     for(var i=idx.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=idx[i];idx[i]=idx[j];idx[j]=tmp;}
     idx.forEach(function(i){
@@ -369,23 +400,79 @@
             if(c.textContent===q.options[q.answer]){c.classList.remove("faded");c.classList.add("correct");}
           });
         }
-        renderBoard();bonusDone++;if(bonusDone===2)showFinal();
+        renderBug();
+        bonusDone++;
+        if(bonusDone===2) showFinal();
       });
       box.appendChild(b);
     });
   }
-  function showFinal(){$("finalScore").textContent=score;$("finalBox").classList.remove("hidden");$("finalBox").scrollIntoView({behavior:"smooth",block:"center"});}
+  function showFinal(){
+    $("finalScore").textContent=score;
+    $("nextNote").textContent = (mode==="random") ? "Spin up another one below." : "New call drops tomorrow.";
+    $("againBtn").classList.toggle("hidden", mode!=="random");
+    $("finalBox").classList.remove("hidden");
+    $("finalBox").scrollIntoView({behavior:"smooth",block:"center"});
+  }
 
+  /* ---- share ---- */
   $("shareBtn").addEventListener("click",function(){
-    var grid=revealHistory.join("")||"\u2014";
-    var txt="BOOTH REVIEW #001\n"+grid+" \u00B7 "+revealed+"/"+PUZZLE.chunks.length+" reveals\nScore: "+score;
+    var label = (mode==="random") ? "RANDOM" : "#"+pad3(puzzleIdx);
+    var emoji = offBy===0 ? "\uD83C\uDFAF" : offBy<=2 ? "\uD83D\uDFE1" : "\uD83D\uDD34";
+    var txt="BOOTH REVIEW "+label+"\n"+emoji+" off by "+offBy+" \u00B7 "+revealed+"/"+P.chunks.length+" reveals\nScore: "+score+"\nboothreview.github.io";
     var done=function(){var b=$("shareBtn");b.textContent="Copied";setTimeout(function(){b.textContent="Copy result";},1500);};
     if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done).catch(done);
     else done();
   });
 
-  renderAll();
-  syncReadout();
+  /* ---- load / reset ---- */
+  function loadPuzzle(idx, m){
+    puzzleIdx = idx; mode = m; P = PUZZLES[idx];
+    revealed = 1; over = false; score = 0; offBy = 0; bonusDone = 0;
+    slider.value = 1985; syncReadout();
+    $("entry").classList.remove("hidden");
+    $("endZone").classList.add("hidden");
+    $("finalBox").classList.add("hidden");
+    $("q1").innerHTML=""; $("q2").innerHTML=""; $("videoWrap").innerHTML="";
+    $("archivePanel").classList.add("hidden");
+    $("gameArea").classList.remove("hidden");
+    renderChunks(); renderBug();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function randomIdx(){
+    var max = releasedIndex();
+    var r = Math.floor(Math.random()*(max+1));
+    if(max>0 && r===puzzleIdx) r=(r+1)%(max+1);  // avoid instant repeat when possible
+    return r;
+  }
+
+  /* ---- tabs ---- */
+  function setTab(name){
+    $("tabDaily").classList.toggle("active",name==="daily");
+    $("tabRandom").classList.toggle("active",name==="random");
+    $("tabArchive").classList.toggle("active",name==="archive");
+  }
+  $("tabDaily").addEventListener("click",function(){ setTab("daily"); loadPuzzle(releasedIndex(),"daily"); });
+  $("tabRandom").addEventListener("click",function(){ setTab("random"); loadPuzzle(randomIdx(),"random"); });
+  $("againBtn").addEventListener("click",function(){ loadPuzzle(randomIdx(),"random"); });
+  $("tabArchive").addEventListener("click",function(){
+    setTab("archive");
+    var list=$("archList"); list.innerHTML="";
+    for(var i=releasedIndex(); i>=0; i--){
+      (function(i){
+        var row=document.createElement("button");row.className="arch-row";
+        row.innerHTML='<span><span class="num">#'+pad3(i)+'</span>&nbsp; Day '+(i+1)+'</span><span class="dt">'+dayDate(i)+'</span>';
+        row.addEventListener("click",function(){ setTab("archive"); loadPuzzle(i,"archive-play"); });
+        list.appendChild(row);
+      })(i);
+    }
+    $("gameArea").classList.add("hidden");
+    $("archivePanel").classList.remove("hidden");
+  });
+
+  /* ---- boot: today's daily ---- */
+  loadPuzzle(releasedIndex(),"daily");
 })();
 </script>
 </body>
