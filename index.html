@@ -34,11 +34,14 @@
   .bug-cell.hot .lbl{color:rgba(255,255,255,.75)}
   .bug-cell.hot .val{color:#fff}
 
-  /* mode tabs */
   .tabs{display:flex;gap:8px;margin:0 0 6px}
   .tab{flex:1;font-family:'Archivo',sans-serif;font-weight:800;font-style:italic;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 0;cursor:pointer;transition:color .15s,border-color .15s}
   .tab.active{color:#fff;background:var(--net-red);border-color:var(--net-red)}
   .tab:focus-visible{outline:2px solid var(--net-red);outline-offset:2px}
+  .tab .lk{display:none}
+  .tab.locked{opacity:.5}
+  .tab.locked .lk{display:inline}
+  .lock-hint{text-align:center;font-size:12px;font-weight:700;font-style:italic;color:var(--gold);background:rgba(255,193,7,.08);border:1px solid rgba(255,193,7,.3);border-radius:6px;padding:8px;margin:0 0 6px;animation:ccIn .2s ease}
 
   .section-tag{display:flex;align-items:center;margin:18px 0 10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;font-style:italic}
   .section-tag .chip{background:var(--net-red);color:#fff;padding:4px 10px 4px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 8px) 100%,0 100%)}
@@ -89,20 +92,15 @@
   .watch-link:hover{border-color:var(--net-red)}
   .watch-row{text-align:center}
 
-  .bonus{margin-top:20px;animation:ccIn .4s ease}
-  .bq{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
-  .bq .q{font-weight:800;font-style:italic;font-size:15px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
-  .bq .q .pts{color:var(--net-red);font-family:'IBM Plex Mono',monospace;font-size:12px;margin-left:6px;font-style:normal}
-  .choices{display:flex;flex-direction:column;gap:8px}
-  .choice{text-align:left;font-family:'Archivo',sans-serif;font-size:15px;font-weight:600;color:var(--white);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:11px 14px;cursor:pointer;transition:border-color .15s,background .15s}
-  .choice:hover{border-color:#4a4a52}
-  .choice:focus-visible{outline:2px solid var(--net-red);outline-offset:2px}
-  .choice:disabled{cursor:default}
-  .choice.correct{border-color:var(--green);background:rgba(47,191,113,.1);color:var(--green)}
-  .choice.wrong{border-color:var(--bad);background:rgba(255,82,82,.08);color:var(--bad)}
-  .choice.faded{opacity:.45}
+  /* Booth Notes */
+  .booth-notes{margin-top:20px;animation:ccIn .4s ease}
+  .mic-line{display:flex;align-items:center;gap:10px;background:#000;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:6px;padding:10px 14px;margin-bottom:10px}
+  .mic-line .mic{font-size:16px}
+  .mic-line .mt{font-size:13px;color:var(--dim);font-weight:600;line-height:1.3}
+  .mic-line .mt b{color:var(--white);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.02em;font-size:14px;display:block;margin-top:1px}
+  .notes-content{background:var(--panel-2);border:1px solid var(--line);border-left:3px solid var(--net-red);border-radius:6px;padding:16px;font-family:'Archivo',sans-serif;font-size:14px;color:var(--white);line-height:1.6}
 
-  .final{margin-top:8px;text-align:center;background:var(--panel-2);border:1px solid var(--net-red);border-radius:10px;padding:18px;animation:ccIn .4s ease}
+  .final{margin-top:16px;text-align:center;background:var(--panel-2);border:1px solid var(--net-red);border-radius:10px;padding:18px;animation:ccIn .4s ease}
   .final .lbl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-weight:700}
   .final .big{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:44px;color:var(--white);font-variant-numeric:tabular-nums;line-height:1.1}
   .final .next-note{color:var(--dim);font-size:13px;margin-top:8px}
@@ -114,7 +112,6 @@
   .again-btn:hover{border-color:var(--net-red)}
   .share-btn:focus-visible,.again-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
 
-  /* archive */
   .arch-list{display:flex;flex-direction:column;gap:8px}
   .arch-row{display:flex;justify-content:space-between;align-items:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;color:var(--white);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:13px 14px;cursor:pointer;transition:border-color .15s}
   .arch-row:hover{border-color:var(--net-red)}
@@ -130,10 +127,43 @@
   @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
   .hidden{display:none !important}
+
+  /* intro modal */
+  .modal-veil{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:20px;animation:ccIn .25s ease}
+  .modal{width:100%;max-width:380px;background:var(--panel-2);border:1px solid var(--line);border-top:4px solid var(--net-red);border-radius:12px;padding:0 0 18px;overflow:hidden}
+  .modal-top{background:#000;padding:16px 20px 14px;border-bottom:1px solid var(--line)}
+  .modal-top .mt-brand{font-weight:900;font-style:italic;font-stretch:72%;font-size:24px;text-transform:uppercase;line-height:1}
+  .modal-top .mt-brand .accent{color:var(--net-red)}
+  .modal-top .mt-sub{color:var(--dim);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-style:italic;font-weight:600;margin-top:5px}
+  .modal-body{padding:16px 20px 4px}
+  .rule{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+  .rule .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--net-red);color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .rule .tx{font-size:14px;line-height:1.5;color:var(--white)}
+  .rule .tx b{color:var(--net-red)}
+  .modal-go{display:block;width:calc(100% - 40px);margin:8px 20px 0;background:var(--net-red);color:#fff;border:0;border-radius:8px;font-family:'Archivo',sans-serif;font-weight:900;font-style:italic;font-size:16px;letter-spacing:.08em;text-transform:uppercase;padding:14px 0;cursor:pointer}
+  .modal-go:hover{background:var(--net-red-dk)}
+  .modal-go:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.ticker .tk-text{padding-left:0}}
 </style>
 </head>
 <body>
+<div class="modal-veil hidden" id="introModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="How to play Booth Review">
+    <div class="modal-top">
+      <div class="mt-brand">Booth <span class="accent">Review</span></div>
+      <div class="mt-sub">How to play · 20 seconds</div>
+    </div>
+    <div class="modal-body">
+      <div class="rule"><div class="n">1</div><div class="tx">Read the iconic play-by-play call as it's <b>revealed line by line</b>.</div></div>
+      <div class="rule"><div class="n">2</div><div class="tx">Slide to the <b>year</b> you think it happened. You get <b>one guess</b> — the closer you land, the more points.</div></div>
+      <div class="rule"><div class="n">3</div><div class="tx">Need more? Reveal extra lines — but <b>every reveal lowers your max score</b>. Guess early, score big.</div></div>
+      <div class="rule"><div class="n">4</div><div class="tx">Lock it in, <b>watch the real moment</b>, and read the Booth Notes. Finish today's call to unlock Random & Archive.</div></div>
+    </div>
+    <button class="modal-go" id="introGo">Let's go</button>
+  </div>
+</div>
+
 <div class="app">
   <header>
     <div class="topstripe"></div>
@@ -150,17 +180,16 @@
 
   <div class="tabs">
     <button class="tab active" id="tabDaily">Daily</button>
-    <button class="tab" id="tabRandom">Random</button>
-    <button class="tab" id="tabArchive">Archive</button>
+    <button class="tab" id="tabRandom">Random<span class="lk">&nbsp;🔒</span></button>
+    <button class="tab" id="tabArchive">Archive<span class="lk">&nbsp;🔒</span></button>
   </div>
+  <div class="lock-hint hidden" id="lockHint">Finish today's call to unlock Random &amp; Archive</div>
 
-  <!-- ARCHIVE PANEL -->
   <div id="archivePanel" class="hidden">
     <div class="section-tag"><span class="chip">Vault</span><span class="rest">Every call so far · replay any day</span></div>
     <div class="arch-list" id="archList"></div>
   </div>
 
-  <!-- GAME -->
   <div id="gameArea">
     <div id="phase1">
       <div class="section-tag"><span class="chip">Live</span><span class="rest">The call · play-by-play feed</span></div>
@@ -188,14 +217,15 @@
         <div class="sub" id="resultSub"></div>
         <div class="math" id="mathLine"></div>
       </div>
+
       <div class="section-tag"><span class="chip">Replay</span><span class="rest">The moment · watch the real call</span></div>
       <div class="video-wrap" id="videoWrap"></div>
       <div class="watch-row"><a class="watch-link hidden" id="watchLink" target="_blank" rel="noopener">Can't see it? Watch on YouTube ↗</a></div>
 
-      <div class="bonus">
-        <div class="section-tag"><span class="chip">Bonus</span><span class="rest">Die-hard round</span></div>
-        <div class="bq"><div class="q">Who made the call? <span class="pts">+100</span></div><div class="choices" id="q1"></div></div>
-        <div class="bq"><div class="q">Who won it? <span class="pts">+100</span></div><div class="choices" id="q2"></div></div>
+      <div class="booth-notes hidden" id="boothNotesWrap">
+        <div class="section-tag"><span class="chip">Booth Notes</span><span class="rest">On the mic · the aftermath</span></div>
+        <div class="mic-line"><span class="mic">🎙️</span><span class="mt">On the call<b id="announcerName"></b></span></div>
+        <div class="notes-content" id="notesContent"></div>
       </div>
 
       <div class="final hidden" id="finalBox">
@@ -205,31 +235,31 @@
         <div class="btn-row">
           <button class="share-btn" id="shareBtn">Copy result</button>
           <button class="again-btn hidden" id="againBtn">Another random</button>
+          <button class="again-btn hidden" id="toRandomBtn">Play Random →</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="footer-note">BOOTH REVIEW · daily + random modes · no saves yet<br>video plays via official YouTube embed</div>
+  <div class="footer-note">BOOTH REVIEW · daily + random modes · one guess, scored on how close<br>video plays via official YouTube embed</div>
 </div>
 
 <div class="ticker" aria-hidden="true">
   <div class="tk-label">Bottom Line</div>
-  <div class="tk-track"><div class="tk-text">BOOTH REVIEW · ONE GUESS, SCORED ON HOW CLOSE YOU LAND · EVERY REVEAL LOWERS YOUR MAX · EXACT YEAR OFF ONE CLUE = 1000 · BONUS ROUND +200 · NEW CALL EVERY DAY ·&nbsp;</div></div>
+  <div class="tk-track"><div class="tk-text">BOOTH REVIEW · ONE GUESS, SCORED ON HOW CLOSE YOU LAND · EVERY REVEAL LOWERS YOUR MAX · EXACT YEAR OFF ONE CLUE = 1000 · NEW CALL EVERY DAY ·&nbsp;</div></div>
 </div>
 
 <script>
 (function(){
   "use strict";
 
-  /* ============ PUZZLE LIBRARY ============
-     Day 1 = EPOCH date. PUZZLES[0] is Day #001.
-     Add new puzzles to the end; daily mode advances automatically. */
-  var EPOCH = { y:2026, m:5, d:10 };  // June 10, 2026 (month is 0-indexed)
+  /* ============ PUZZLE LIBRARY ============ */
+  var EPOCH = { y:2026, m:5, d:11 };  // June 11, 2026 — Day #001 = The Block
 
   var PUZZLES = [
-    {
+    { /* #001 The Block */
       year: 2016,
+      announcer: "Mike Breen (ABC)",
       chunks: [
         "\u201CIrving drives, hop-steps inside, floats it up...\u201D",
         "\u201Cmisses, rebound taken by Iguodala,\u201D",
@@ -238,45 +268,211 @@
       ],
       video: "https://www.youtube-nocookie.com/embed/Hgade7_mjHc?start=4",
       watch: "https://www.youtube.com/watch?v=Hgade7_mjHc&t=4s",
-      q1: { options:["Mike Breen","Marv Albert","Kevin Harlan"], answer:0 },
-      q2: { options:["Cleveland Cavaliers","Golden State Warriors","Miami Heat"], answer:0 },
-      eventLine: "2016 NBA Finals, Game 7 \u2014 Cleveland 93, Golden State 89."
+      eventLine: "2016 NBA Finals, Game 7 \u2014 Cavaliers beat the Warriors 93\u201389.",
+      context: "LeBron James was clocked at 20.1 mph chasing down Andre Iguodala, capping the first 3-1 comeback in NBA Finals history. It remains the defining defensive play of his career."
     },
-    {
+    { /* #002 Ag\u00FCero */
       year: 2012,
+      announcer: "Martin Tyler (Sky Sports)",
       chunks: [
-        "\u201CIt's finished at Sunderland.\u201D",
-        "\u201CManchester United have done all they can, that Rooney goal was enough for the 3 points...\u201D",
-        "\u201CManchester City are still alive here... Balotelli...\u201D",
-        "\u201CAGUEROOOOOOOOOOOOO! I swear you'll never see anything like this ever again! So watch it! Drink it in!\u201D"
+        "\u201CIt's finished at Sunderland. Manchester United have done all they can...\u201D",
+        "\u201CManchester City are still alive here...\u201D",
+        "\u201C...Balotelli...\u201D",
+        "\u201CAGUEROOOOOOOOOOOOO! I swear you'll never see anything like this ever again!\u201D"
       ],
       video: "https://www.youtube-nocookie.com/embed/39VJVyKhbGM",
       watch: "https://www.youtube.com/shorts/39VJVyKhbGM",
-      /* fallback if the Short ever dies (compilation, leaky):
-         https://www.youtube-nocookie.com/embed/xOt9dmkydwM?start=500&end=529 */
-      q1: { options:["Martin Tyler","Peter Drury","Ray Hudson"], answer:0 },
-      q2: { options:["Manchester City","Manchester United","QPR"], answer:0 },
-      eventLine: "Premier League final day 2012 \u2014 City 3, QPR 2. Title won in stoppage time."
+      eventLine: "Premier League final day 2012 \u2014 City beat QPR to steal the title in stoppage time.",
+      context: "United players were on the pitch at Sunderland waiting for the trophy when the roar from the Etihad rippled through. Mario Balotelli's assist was his only one in his entire Man City career."
+    },
+    { /* #003 Jenkins */
+      year: 2016,
+      announcer: "Jim Nantz (CBS)",
+      chunks: [
+        "\u201C...trying to go the length of the court...\u201D",
+        "\u201C...with Arcidiacono. Three seconds at midcourt!\u201D",
+        "\u201CGives it to Jenkins!\u201D",
+        "\u201CFor the championship... YES! Villanova! Phenomenal!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/L7FFJUz0tdo?start=0",
+      watch: "https://www.youtube.com/watch?v=L7FFJUz0tdo",
+      eventLine: "2016 NCAA title game \u2014 Villanova beat North Carolina on a buzzer-beater.",
+      context: "Kris Jenkins trailed the play yelling 'Phil!' at Ryan Arcidiacono. It remains the only buzzer-beating three to win an NCAA Men's title \u2014 moments after UNC's Marcus Paige hit a double-clutch three to tie it."
+    },
+    { /* #004 Butler */
+      year: 2015,
+      announcer: "Al Michaels (NBC)",
+      chunks: [
+        "\u201C2nd and goal. Baldwin sets up on the left. Play clock at five...\u201D",
+        "\u201C...and the pass is...\u201D",
+        "\u201C...intercepted at the goal line...\u201D",
+        "\u201C...by Malcolm Butler! Unreal!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/XBXU8rVr_GY?start=1500",
+      watch: "https://www.youtube.com/watch?v=XBXU8rVr_GY&t=1500s",
+      eventLine: "Super Bowl XLIX \u2014 Patriots beat the Seahawks on Butler's goal-line pick.",
+      context: "With Marshawn Lynch in the backfield, Seattle inexplicably threw. Undrafted rookie Malcolm Butler recognized the pick formation from practice and jumped the route, sealing New England's fourth ring."
+    },
+    { /* #005 Vince Young */
+      year: 2006,
+      announcer: "Keith Jackson (ABC)",
+      chunks: [
+        "\u201CI kinda feel like, Joe, I'm too old for this... Fourth and five...\u201D",
+        "\u201C...the national championship on the line right here.\u201D",
+        "\u201CHe's going for the corner...\u201D",
+        "\u201CHe's got it! Vince. Young. Scores!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/GeiXFtkGp2s?start=6",
+      watch: "https://www.youtube.com/watch?v=GeiXFtkGp2s&t=6s",
+      eventLine: "2006 Rose Bowl \u2014 Texas beat USC for the national title.",
+      context: "Widely called the greatest college football game ever played. Vince Young's 8-yard scramble on 4th down snapped USC's 34-game win streak and gave Texas its first undisputed title since 1969."
+    },
+    { /* #006 Cubs */
+      year: 2016,
+      announcer: "Joe Buck (FOX)",
+      chunks: [
+        "\u201CHere's the 0-1. This is gonna be a tough play...\u201D",
+        "\u201C...Bryant...\u201D",
+        "\u201C...the Cubs...\u201D",
+        "\u201C...win the World Series! Bryant makes the play, it's over!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/HOp8w2PgHlM?start=0",
+      watch: "https://www.youtube.com/watch?v=HOp8w2PgHlM",
+      eventLine: "2016 World Series, Game 7 \u2014 Cubs beat Cleveland, ending a 108-year drought.",
+      context: "After Rajai Davis tied it for Cleveland in the 8th, a 17-minute rain delay paused the game before the 10th. Jason Heyward's players-only meeting in the weight room is now legend \u2014 the Cubs broke the curse minutes later."
+    },
+    { /* #007 Minneapolis Miracle */
+      year: 2018,
+      announcer: "Joe Buck (FOX)",
+      chunks: [
+        "\u201CTo save time, that's where... Keenum is gonna work the ball to the boundary.\u201D",
+        "\u201CKeenum steps into it. Pass is...\u201D",
+        "\u201C...CAUGHT! DIGGS! SIDELINE!\u201D",
+        "\u201C...TOUCHDOWN! UNBELIEVABLE! VIKINGS WIN IT!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/dzRRi2QcSEM?start=0",
+      watch: "https://www.youtube.com/watch?v=dzRRi2QcSEM",
+      eventLine: "NFC Divisional, Jan 2018 \u2014 Vikings beat the Saints on a walk-off TD.",
+      context: "Saints safety Marcus Williams whiffed on the tackle, wiping out his own teammate. It was the first game-winning TD as time expired in regulation in NFL playoff history."
+    },
+    { /* #008 Go Go USA */
+      year: 2010,
+      announcer: "Ian Darke (ESPN)",
+      chunks: [
+        "\u201CHoward gratefully claims it. Distribution, brilliant.\u201D",
+        "\u201CAnd finds Landon Donovan. Dempsey is with him.\u201D",
+        "\u201CIt's a cross, and Dempsey is denied again!\u201D",
+        "\u201CAnd Donovan has scored! Oh, can you believe this?! Go, go, USA!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/b7eZmKWW9s4?start=4",
+      watch: "https://www.youtube.com/watch?v=b7eZmKWW9s4&t=4s",
+      eventLine: "2010 World Cup group stage \u2014 USA beat Algeria in stoppage time to win the group.",
+      context: "The USMNT was seconds from group-stage elimination. Tim Howard's quick throw launched the counter, ending with Donovan's rebound goal and pandemonium across the country."
+    },
+    { /* #009 Kick Six */
+      year: 2013,
+      announcer: "Rod Bramblett (Auburn Radio)",
+      chunks: [
+        "\u201CWell, I guess if this thing comes up short he can field it and run it out.\u201D",
+        "\u201CAlright, here we go. 56-yarder, it's got\u2014no, it does not have the leg.\u201D",
+        "\u201CAnd Chris Davis takes it in the back of the end zone. He'll run it out to the 10, 15, 20...\u201D",
+        "\u201CThere goes Davis! Oh my God, Davis is gonna run it all the way back! Auburn's gonna win the football game!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/94DJFNqD9-Y?start=0",
+      watch: "https://www.youtube.com/watch?v=94DJFNqD9-Y",
+      eventLine: "2013 Iron Bowl \u2014 Auburn beat Alabama on a 109-yard field-goal return.",
+      context: "Nick Saban argued one second back on the clock for a 57-yard try. Chris Davis caught the short kick in the end zone and returned it 109 yards, ending Alabama's title defense."
+    },
+    { /* #010 Cardiac Kemba */
+      year: 2011,
+      announcer: "Sean McDonough (ESPN)",
+      chunks: [
+        "\u201CWalker with seven... Got a mismatch.\u201D",
+        "\u201CWalker on McGhee with four.\u201D",
+        "\u201CKemba Walker... step-back... Walker!\u201D",
+        "\u201CCARDIAC KEMBA! DOES IT AGAIN! UCONN WINS AT THE BUZZER!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/G6eMBvSiOq0?start=6",
+      watch: "https://www.youtube.com/watch?v=G6eMBvSiOq0&t=6s",
+      eventLine: "2011 Big East Tournament \u2014 UConn beat Pitt on a Kemba Walker buzzer-beater.",
+      context: "The step-back over Gary McGhee defined UConn's run \u2014 five wins in five days at MSG to take the Big East, then six straight to the national title."
+    },
+    { /* #011 Do Not Scratch Your Eyes */
+      year: 2013,
+      announcer: "Bill Leslie (BBC Radio)",
+      chunks: [
+        "\u201CKnockaert takes... Almunia saves! Knockaert follows in... Almunia saves again!\u201D",
+        "\u201CAbsolutely astonishing! Now here come Watford...\u201D",
+        "\u201CForestieri... here's Hogg...\u201D",
+        "\u201CDEENEY!!! Do not scratch your eyes! You are really seeing the most extraordinary finish here!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/6TnKvlQ2h7s?start=63",
+      watch: "https://www.youtube.com/watch?v=6TnKvlQ2h7s&t=63s",
+      eventLine: "2013 Championship play-off semi-final \u2014 Watford beat Leicester on a stoppage-time winner.",
+      context: "Leicester won a 97th-minute penalty; Manuel Almunia saved the kick AND the rebound, launching a 20-second counter that ended with Troy Deeney's volley sending Watford to Wembley."
+    },
+    { /* #012 Ray Allen */
+      year: 2013,
+      announcer: "Mike Breen (ABC)",
+      chunks: [
+        "\u201CShould the Spurs foul, should Miami go for the 3 right away...\u201D",
+        "\u201CJames catches, puts up a three... won't go...\u201D",
+        "\u201C...rebound Bosh, back out to Allen, his three-pointer...\u201D",
+        "\u201CBANG! Tie game with five seconds remaining!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/tr6XsZVb-ZE?start=0",
+      watch: "https://www.youtube.com/watch?v=tr6XsZVb-ZE",
+      eventLine: "2013 NBA Finals, Game 6 \u2014 Heat forced OT on Ray Allen's corner three, beat the Spurs.",
+      context: "Arena staff had already rolled out the championship tape around the court for San Antonio. Ray Allen backpedaled to the corner without looking down, saving Miami's season."
+    },
+    { /* #013 Bat Flip */
+      year: 2015,
+      announcer: "Buck Martinez (Sportsnet)",
+      chunks: [
+        "\u201CDonaldson driving in the tying run on a fielder's choice, after the Rangers took the lead in bizarre fashion in the top half...\u201D",
+        "\u201CThe 1-1 from Dyson...\u201D",
+        "\u201CBautista with a drive... deep left field...\u201D",
+        "\u201CNo doubt about it!\u201D"
+      ],
+      video: "https://www.youtube-nocookie.com/embed/3ANE-fJK8PU?start=893",
+      watch: "https://www.youtube.com/watch?v=3ANE-fJK8PU&t=893s",
+      eventLine: "2015 ALDS Game 5 \u2014 Blue Jays beat the Rangers; Bautista's bat flip heard 'round the world.",
+      context: "It capped the wildest inning in playoff history \u2014 after a bizarre Rangers run scored on a deflection off Choo's bat, the furious Toronto crowd nearly rioted before Joey Bats delivered the dagger and the flip."
     }
   ];
 
-  /* ============ SCORING ============ */
-  var MAX_PTS = 1000, PER_YEAR = 100;            // closeness: 1000 - 100/yr off, floor 0
-  var MULT = [1.00, 0.85, 0.70, 0.55];            // multiplier by reveals used (1..4)
-  var BONUS_PTS = 100;
+  /* ============ SCORING ============
+     Exponential decay: exact = 1000, each year off costs 15%.
+     Long tail never hits zero (floored at 5) so a far guess still scores. */
+  var MAX_PTS = 1000;
+  var DECAY = 0.85;          // 15% off per year
+  var FLOOR = 5;             // never below this for a real guess
+  var MULT = [1.00, 0.85, 0.70, 0.55];  // reveal multiplier
+
+  function closenessScore(off){
+    if(off===0) return MAX_PTS;
+    return Math.max(FLOOR, Math.round(MAX_PTS * Math.pow(DECAY, off)));
+  }
 
   /* ============ STATE ============ */
-  var mode = "daily";          // daily | random | archive-play
-  var puzzleIdx = 0;
-  var P = null;
-  var revealed = 1, over = false, score = 0, offBy = 0, bonusDone = 0;
+  var mode = "daily";
+  var puzzleIdx = 0, P = null;
+  var revealed = 1, over = false, score = 0, offBy = 0;
+  var dailyDone = false;
 
   function $(id){return document.getElementById(id);}
 
-  /* ---- day math ---- */
+  /* Day rolls over at midnight US Eastern (handles EST/EDT automatically),
+     so every player worldwide gets the same daily puzzle. */
+  function easternYMD(date){
+    // Format the given instant as the calendar date in New York.
+    var s = date.toLocaleDateString("en-CA", { timeZone: "America/New_York" }); // "YYYY-MM-DD"
+    var p = s.split("-");
+    return { y:+p[0], m:+p[1]-1, d:+p[2] };
+  }
   function todayIndex(){
-    var now = new Date();
-    var a = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    var nowET = easternYMD(new Date());
+    var a = Date.UTC(nowET.y, nowET.m, nowET.d);
     var e = Date.UTC(EPOCH.y, EPOCH.m, EPOCH.d);
     return Math.floor((a - e) / 86400000);
   }
@@ -291,7 +487,6 @@
   }
   function pad3(n){ n=n+1; return (n<10?"00":n<100?"0":"")+n; }
 
-  /* ---- scorebug ---- */
   function ceiling(){ return Math.round(MAX_PTS * MULT[revealed-1]); }
   function renderBug(){
     $("maxVal").textContent = over ? score : ceiling();
@@ -299,7 +494,6 @@
     $("modeVal").textContent = (mode==="random") ? "RND" : "#"+pad3(puzzleIdx);
   }
 
-  /* ---- call stack ---- */
   function renderChunks(){
     var stack = $("ccStack");
     stack.innerHTML = "";
@@ -311,7 +505,7 @@
         var ghost=document.createElement("div");ghost.className="static";ghost.textContent="\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593";
         wrap.appendChild(ghost);
         if(i===revealed && !over){
-          var nextMax = Math.round(MAX_PTS * MULT[revealed]); // ceiling after this reveal
+          var nextMax = Math.round(MAX_PTS * MULT[revealed]);
           var btn=document.createElement("button");btn.className="reveal-btn";
           btn.textContent="REVEAL \u00B7 MAX "+nextMax;
           btn.addEventListener("click",doReveal);
@@ -327,7 +521,6 @@
     renderChunks(); renderBug();
   }
 
-  /* ---- slider ---- */
   var slider=$("yrSlider"), readout=$("yrReadout");
   function syncReadout(){ readout.textContent = slider.value; }
   slider.addEventListener("input",syncReadout);
@@ -335,39 +528,39 @@
   $("plus").addEventListener("click",function(){slider.value=Math.min(+slider.max,+slider.value+1);syncReadout();});
   $("goBtn").addEventListener("click",lockIn);
 
-  /* ---- the one guess ---- */
   function lockIn(){
     if(over) return;
     over = true;
+    if(mode==="daily"){ dailyDone = true; saveDailyDone(); setLocks(); }
     var g = parseInt(slider.value,10);
     offBy = Math.abs(g - P.year);
-    var closeness = Math.max(0, MAX_PTS - PER_YEAR*offBy);
+    var closeness = closenessScore(offBy);
     var mult = MULT[revealed-1];
     score = Math.round(closeness * mult);
 
-    revealed = P.chunks.length;   // show the full call
+    revealed = P.chunks.length;
     renderChunks(); renderBug();
     $("entry").classList.add("hidden");
 
     var t=$("resultTitle"), s=$("resultSub"), m=$("mathLine");
-    if(offBy===0){
-      t.textContent="Nailed it. "+P.year+"."; t.className="win";
-    } else if(offBy<=2){
-      t.textContent="Off by "+offBy+". So close."; t.className="close";
-    } else {
-      t.textContent="Off by "+offBy+" years."; t.className="loss";
-    }
+    if(offBy===0){ t.textContent="Nailed it. "+P.year+"."; t.className="win"; }
+    else if(offBy<=2){ t.textContent="Off by "+offBy+". So close."; t.className="close"; }
+    else { t.textContent="Off by "+offBy+" years."; t.className="loss"; }
     s.innerHTML="You said <strong>"+g+"</strong> \u00B7 It was <strong>"+P.year+"</strong>. "+P.eventLine;
-    m.textContent = closeness+" \u00D7 "+(mult*100)+"% ("+(revealed)+"/"+P.chunks.length+" shown) = "+score;
+    m.textContent = closeness+" \u00D7 "+Math.round(mult*100)+"% ("+revealed+"/"+P.chunks.length+" shown) = "+score;
 
     renderVideo();
-    buildBonus("q1",P.q1);
-    buildBonus("q2",P.q2);
+
+    $("announcerName").textContent = P.announcer || "\u2014";
+    var notesWrap=$("boothNotesWrap");
+    $("notesContent").innerHTML = P.context || "";
+    notesWrap.classList.toggle("hidden", !(P.context || P.announcer));
+
     $("endZone").classList.remove("hidden");
     $("endZone").scrollIntoView({behavior:"smooth",block:"start"});
+    showFinal();
   }
 
-  /* ---- video ---- */
   function renderVideo(){
     var wrap=$("videoWrap"), link=$("watchLink");
     wrap.innerHTML="";
@@ -383,39 +576,17 @@
     else { link.classList.add("hidden"); }
   }
 
-  /* ---- bonus ---- */
-  function buildBonus(slot,q){
-    var box=$(slot);
-    box.innerHTML="";
-    var idx=q.options.map(function(_,i){return i;});
-    for(var i=idx.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=idx[i];idx[i]=idx[j];idx[j]=tmp;}
-    idx.forEach(function(i){
-      var b=document.createElement("button");b.className="choice";b.textContent=q.options[i];
-      b.addEventListener("click",function(){
-        Array.prototype.forEach.call(box.children,function(c){c.disabled=true;if(c!==b)c.classList.add("faded");});
-        if(i===q.answer){b.classList.add("correct");score+=BONUS_PTS;}
-        else{
-          b.classList.add("wrong");
-          Array.prototype.forEach.call(box.children,function(c){
-            if(c.textContent===q.options[q.answer]){c.classList.remove("faded");c.classList.add("correct");}
-          });
-        }
-        renderBug();
-        bonusDone++;
-        if(bonusDone===2) showFinal();
-      });
-      box.appendChild(b);
-    });
-  }
   function showFinal(){
     $("finalScore").textContent=score;
-    $("nextNote").textContent = (mode==="random") ? "Spin up another one below." : "New call drops tomorrow.";
-    $("againBtn").classList.toggle("hidden", mode!=="random");
+    var isRandom = (mode==="random");
+    $("againBtn").classList.toggle("hidden", !isRandom);
+    $("toRandomBtn").classList.toggle("hidden", isRandom);
+    if(isRandom){ $("nextNote").textContent = "Spin up another one below."; }
+    else if(mode==="daily"){ $("nextNote").textContent = "Daily complete \u2014 Random & Archive unlocked. New call tomorrow."; }
+    else { $("nextNote").textContent = "Archive replay \u2014 doesn't count toward today."; }
     $("finalBox").classList.remove("hidden");
-    $("finalBox").scrollIntoView({behavior:"smooth",block:"center"});
   }
 
-  /* ---- share ---- */
   $("shareBtn").addEventListener("click",function(){
     var label = (mode==="random") ? "RANDOM" : "#"+pad3(puzzleIdx);
     var emoji = offBy===0 ? "\uD83C\uDFAF" : offBy<=2 ? "\uD83D\uDFE1" : "\uD83D\uDD34";
@@ -425,15 +596,15 @@
     else done();
   });
 
-  /* ---- load / reset ---- */
   function loadPuzzle(idx, m){
     puzzleIdx = idx; mode = m; P = PUZZLES[idx];
-    revealed = 1; over = false; score = 0; offBy = 0; bonusDone = 0;
+    revealed = 1; over = false; score = 0; offBy = 0;
     slider.value = 1985; syncReadout();
     $("entry").classList.remove("hidden");
     $("endZone").classList.add("hidden");
     $("finalBox").classList.add("hidden");
-    $("q1").innerHTML=""; $("q2").innerHTML=""; $("videoWrap").innerHTML="";
+    $("boothNotesWrap").classList.add("hidden");
+    $("videoWrap").innerHTML="";
     $("archivePanel").classList.add("hidden");
     $("gameArea").classList.remove("hidden");
     renderChunks(); renderBug();
@@ -441,22 +612,43 @@
   }
 
   function randomIdx(){
-    var max = releasedIndex();
+    var max = PUZZLES.length - 1;
     var r = Math.floor(Math.random()*(max+1));
-    if(max>0 && r===puzzleIdx) r=(r+1)%(max+1);  // avoid instant repeat when possible
+    if(max>0 && r===puzzleIdx) r=(r+1)%(max+1);
     return r;
   }
 
-  /* ---- tabs ---- */
+  function setLocks(){
+    var locked = !dailyDone;
+    $("tabRandom").classList.toggle("locked", locked);
+    $("tabArchive").classList.toggle("locked", locked);
+  }
+  var hintTimer=null;
+  function flashLockHint(){
+    var h=$("lockHint"); h.classList.remove("hidden");
+    clearTimeout(hintTimer);
+    hintTimer=setTimeout(function(){ h.classList.add("hidden"); },2400);
+  }
+  function dkey(){ return "br_daily_done"; }
+  function loadDailyDone(){
+    try{ var v=localStorage.getItem(dkey()); return v!==null && parseInt(v,10)===releasedIndex(); }catch(e){ return false; }
+  }
+  function saveDailyDone(){ try{ localStorage.setItem(dkey(), String(releasedIndex())); }catch(e){} }
+
   function setTab(name){
     $("tabDaily").classList.toggle("active",name==="daily");
     $("tabRandom").classList.toggle("active",name==="random");
     $("tabArchive").classList.toggle("active",name==="archive");
   }
   $("tabDaily").addEventListener("click",function(){ setTab("daily"); loadPuzzle(releasedIndex(),"daily"); });
-  $("tabRandom").addEventListener("click",function(){ setTab("random"); loadPuzzle(randomIdx(),"random"); });
+  $("tabRandom").addEventListener("click",function(){
+    if(!dailyDone){ flashLockHint(); return; }
+    setTab("random"); loadPuzzle(randomIdx(),"random");
+  });
   $("againBtn").addEventListener("click",function(){ loadPuzzle(randomIdx(),"random"); });
+  $("toRandomBtn").addEventListener("click",function(){ setTab("random"); loadPuzzle(randomIdx(),"random"); });
   $("tabArchive").addEventListener("click",function(){
+    if(!dailyDone){ flashLockHint(); return; }
     setTab("archive");
     var list=$("archList"); list.innerHTML="";
     for(var i=releasedIndex(); i>=0; i--){
@@ -471,8 +663,16 @@
     $("archivePanel").classList.remove("hidden");
   });
 
-  /* ---- boot: today's daily ---- */
+  /* ---- intro modal ---- */
+  function introSeen(){ try{ return localStorage.getItem("br_intro_seen")==="1"; }catch(e){ return false; } }
+  function markIntroSeen(){ try{ localStorage.setItem("br_intro_seen","1"); }catch(e){} }
+  $("introGo").addEventListener("click",function(){ $("introModal").classList.add("hidden"); markIntroSeen(); });
+
+  /* ---- boot ---- */
+  dailyDone = loadDailyDone();
+  setLocks();
   loadPuzzle(releasedIndex(),"daily");
+  if(!introSeen()){ $("introModal").classList.remove("hidden"); $("introGo").focus(); }
 })();
 </script>
 </body>
