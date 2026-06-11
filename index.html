@@ -588,7 +588,8 @@
   }
 
   $("shareBtn").addEventListener("click",function(){
-    var label = (mode==="random") ? "RANDOM" : "#"+pad3(puzzleIdx);
+    var num = "#"+pad3(puzzleIdx);
+    var label = (mode==="random") ? "RANDOM "+num : (mode==="archive-play") ? "ARCHIVE "+num : num;
     var emoji = offBy===0 ? "\uD83C\uDFAF" : offBy<=2 ? "\uD83D\uDFE1" : "\uD83D\uDD34";
     var txt="BOOTH REVIEW "+label+"\n"+emoji+" off by "+offBy+" \u00B7 "+revealed+"/"+P.chunks.length+" reveals\nScore: "+score+"\nboothreview.github.io";
     var done=function(){var b=$("shareBtn");b.textContent="Copied";setTimeout(function(){b.textContent="Copy result";},1500);};
