@@ -676,5 +676,15 @@
   if(!introSeen()){ $("introModal").classList.remove("hidden"); $("introGo").focus(); }
 })();
 </script>
+<!-- ============================================================
+     ANALYTICS (privacy-first, no cookies, anonymous counts only)
+     Cloudflare Web Analytics. To activate:
+       1. cloudflare.com -> sign up (free)
+       2. Left menu -> Analytics & Logs -> Web Analytics -> Add a site
+       3. Enter: boothreview.github.io
+       4. It gives you a token. Paste it below replacing PASTE_TOKEN_HERE
+     Until the token is added, this line does nothing (safe to deploy).
+     ============================================================ -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "972b75d94d274cb8a94d37e74e39c752"}'></script>
 </body>
 </html>
