@@ -557,6 +557,7 @@
   var mode = "daily";
   var puzzleIdx = 0, P = null;
   var revealed = 1, over = false, score = 0, offBy = 0;
+  var shareReveals = 1;   // true reveal count at guess time (for share text)
   var dailyDone = false;
 
   function $(id){return document.getElementById(id);}
@@ -635,10 +636,11 @@
     var g = parseInt(slider.value,10);
     offBy = Math.abs(g - P.year);
     var closeness = closenessScore(offBy);
-    var mult = MULT[revealed-1];
+    var usedReveals = revealed;            // how many were actually shown at guess time
+    var mult = MULT[usedReveals-1];
     score = Math.round(closeness * mult);
 
-    revealed = P.chunks.length;
+    revealed = P.chunks.length;            // now reveal all for the result screen
     renderChunks(); renderBug();
     $("entry").classList.add("hidden");
 
@@ -647,7 +649,7 @@
     else if(offBy<=2){ t.textContent="Off by "+offBy+". So close."; t.className="close"; }
     else { t.textContent="Off by "+offBy+" years."; t.className="loss"; }
     s.innerHTML="You said <strong>"+g+"</strong> \u00B7 It was <strong>"+P.year+"</strong>. "+P.eventLine;
-    m.textContent = closeness+" \u00D7 "+Math.round(mult*100)+"% ("+revealed+"/"+P.chunks.length+" shown) = "+score;
+    m.textContent = closeness+" \u00D7 "+Math.round(mult*100)+"% ("+usedReveals+"/"+P.chunks.length+" shown) = "+score;
 
     renderVideo();
 
@@ -656,8 +658,10 @@
     $("notesContent").innerHTML = P.context || "";
     notesWrap.classList.toggle("hidden", !(P.context || P.announcer));
 
+    shareReveals = usedReveals;            // remember for the share text
+
     if(mode==="daily"){
-      saveDailyResult({ idx:releasedIndex(), guess:g, off:offBy, reveals:revealed, score:score });
+      saveDailyResult({ idx:releasedIndex(), guess:g, off:offBy, reveals:usedReveals, score:score });
       recordDaily(releasedIndex(), offBy, score);
     }
 
@@ -699,7 +703,7 @@
     var label = (mode==="random") ? "RANDOM "+num : (mode==="archive-play") ? "ARCHIVE "+num : num;
     var emoji = offBy===0 ? "\uD83C\uDFAF" : offBy<=2 ? "\uD83D\uDFE1" : "\uD83D\uDD34";
     var hitLine = offBy===0 ? (emoji+" Bullseye!") : (emoji+" off by "+offBy);
-    var txt="BOOTH REVIEW "+label+"\n"+hitLine+" \u00B7 "+revealed+"/"+P.chunks.length+" reveals\nScore: "+score;
+    var txt="BOOTH REVIEW "+label+"\n"+hitLine+" \u00B7 "+shareReveals+"/"+P.chunks.length+" reveals\nScore: "+score;
     if(mode==="daily"){
       var st=loadStats();
       if(st.streak>0) txt += "\n\uD83D\uDD25 "+st.streak+"-day streak";
@@ -739,6 +743,7 @@
     puzzleIdx = res.idx; mode = "daily"; P = PUZZLES[res.idx];
     revealed = P.chunks.length; over = true;
     offBy = res.off; score = res.score;
+    shareReveals = res.reveals;
     setTab("daily");
     $("archivePanel").classList.add("hidden");
     $("gameArea").classList.remove("hidden");
