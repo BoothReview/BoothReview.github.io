@@ -564,6 +564,7 @@
   var MULT = [1.00, 0.85, 0.70, 0.55];  // reveal multiplier (normal mode, unchanged)
 
   var hardMode = false;      // difficulty toggle (display + scoring); separate from daily/random "mode"
+  var hardLockedOut = false;
   function diffMax(){ return hardMode ? MAX_PTS*HARD_X : MAX_PTS; }
 
   /* ---- redaction: ==[name]== reads normally in Normal mode, becomes [Redacted] in Hard ---- */
@@ -661,16 +662,26 @@
 
   /* ---- difficulty toggle ---- */
   function setHard(h){
+    if(h && hardLockedOut) return;
     hardMode = h;
     $("dtNormal").classList.toggle("active", !h);
     $("dtHard").classList.toggle("active", h);
+    $("dtHard").disabled = hardLockedOut || over;
     if(!over){ renderChunks(); renderBug(); }
   }
   function setToggleEnabled(on){
     $("diffToggle").classList.toggle("locked", !on);
+    $("dtHard").disabled = hardLockedOut || !on;
   }
-  $("dtNormal").addEventListener("click",function(){ if(!over) setHard(false); });
-  $("dtHard").addEventListener("click",function(){ if(!over) setHard(true); });
+  $("dtNormal").addEventListener("click",function(){
+    if(!over){
+      hardLockedOut = true;
+      hardMode = false;
+      $("dtHard").disabled = true;
+      setHard(false);
+    }
+  });
+  $("dtHard").addEventListener("click",function(){ if(!over && !hardLockedOut) setHard(true); });
 
   function lockIn(){
     if(over) return;
@@ -765,6 +776,8 @@
     puzzleIdx = idx; mode = m; P = PUZZLES[idx];
     revealed = 1; over = false; score = 0; offBy = 0;
     if(m==="daily"){ revealed = Math.min(loadDailyReveals(), P.chunks.length); }
+    hardLockedOut = false;
+    $("dtHard").disabled = false;
     setHard(true); setToggleEnabled(true);   // default Hard (redacted) so names never flash before the player chooses
     slider.value = 1985; syncReadout();
     $("entry").classList.remove("hidden");
