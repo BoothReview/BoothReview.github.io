@@ -384,19 +384,19 @@
       eventLine: "2016 World Series, Game 7 \u2014 Cubs beat Cleveland, ending a 108-year drought.",
       context: "After Rajai Davis tied it for Cleveland in the 8th, a 17-minute rain delay paused the game before the 10th. Jason Heyward's players-only meeting in the weight room is now legend \u2014 the Cubs broke the curse minutes later."
     },
-    { /* #007 Minneapolis Miracle */
-      year: 2018,
-      announcer: "Joe Buck (FOX)",
+    { /* #007 Ryan Williams vs Georgia */
+      year: 2024,
+      announcer: "Chris Fowler (ABC)",
       chunks: [
-        "\u201CTo save time, that's where... ==[Keenum]== is gonna work the ball to the boundary.\u201D",
-        "\u201C==[Keenum]== steps into it. Pass is...\u201D",
-        "\u201C...CAUGHT! ==[DIGGS]==! SIDELINE!\u201D",
-        "\u201C...TOUCHDOWN! UNBELIEVABLE! ==[VIKINGS]== WIN IT!\u201D"
+        "\u201CThere was a lot of calm and command from ==[Milroe]== at the start of this game \u2014 he's got to have it right now.\u201D",
+        "\u201CAnd they take a downfield shot... AND THE CATCH IS MADE!\u201D",
+        "\u201CIT'S ==[RYAN WILLIAMS]==! STILL SPINNING FREE!\u201D",
+        "\u201CTOUCHDOWN ==[ALABAMA]==! THEY ANSWER IN ONE PLAY \u2014 75 YARDS! THE 17-YEAR-OLD. ARE YOU KIDDING US?!\u201D"
       ],
-      video: "https://www.youtube-nocookie.com/embed/dzRRi2QcSEM?start=0",
-      watch: "https://www.youtube.com/watch?v=dzRRi2QcSEM",
-      eventLine: "NFC Divisional, Jan 2018 \u2014 Vikings beat the Saints on a walk-off TD.",
-      context: "Saints safety Marcus Williams whiffed on the tackle, wiping out his own teammate. It was the first game-winning TD as time expired in regulation in NFL playoff history."
+      video: "https://www.youtube-nocookie.com/embed/_8tVjLu7FWI?start=0",
+      watch: "https://www.youtube.com/watch?v=_8tVjLu7FWI",
+      eventLine: "Sept 2024 \u2014 17-year-old freshman Ryan Williams hits a 75-yard spin-move game-winner vs Georgia.",
+      context: "After Georgia erased a 28-0 deficit to lead 34-33 with 2:31 left, the stadium went silent. On the next snap, Milroe hit Williams deep; the 17-year-old spun two defenders into each other and raced 75 yards to retake the lead in the defining moment of the SEC season."
     },
     { /* #008 Jenkins */
       year: 2016,
@@ -496,19 +496,19 @@
       eventLine: "Feb 2016 \u2014 Stephen Curry's 38-foot OT game-winner in OKC tied the single-game 3-point record.",
       context: "In a regular-season game that felt like a Finals Game 7, the 52-5 Warriors battled the Thunder in OKC. After Westbrook missed, Steve Kerr opted not to call timeout \u2014 Curry pulled up from 38 feet to win it and cap one of the great shooting nights ever."
     },
-    { /* #015 Ryan Williams vs Georgia */
-      year: 2024,
-      announcer: "Chris Fowler (ABC)",
+    { /* #015 Minneapolis Miracle */
+      year: 2018,
+      announcer: "Joe Buck (FOX)",
       chunks: [
-        "\u201CThere was a lot of calm and command from ==[Milroe]== at the start of this game \u2014 he's got to have it right now.\u201D",
-        "\u201CAnd they take a downfield shot... AND THE CATCH IS MADE!\u201D",
-        "\u201CIT'S ==[RYAN WILLIAMS]==! STILL SPINNING FREE!\u201D",
-        "\u201CTOUCHDOWN ==[ALABAMA]==! THEY ANSWER IN ONE PLAY \u2014 75 YARDS! THE 17-YEAR-OLD. ARE YOU KIDDING US?!\u201D"
+        "\u201CTo save time, that's where... ==[Keenum]== is gonna work the ball to the boundary.\u201D",
+        "\u201C==[Keenum]== steps into it. Pass is...\u201D",
+        "\u201C...CAUGHT! ==[DIGGS]==! SIDELINE!\u201D",
+        "\u201C...TOUCHDOWN! UNBELIEVABLE! ==[VIKINGS]== WIN IT!\u201D"
       ],
-      video: "https://www.youtube-nocookie.com/embed/_8tVjLu7FWI?start=0",
-      watch: "https://www.youtube.com/watch?v=_8tVjLu7FWI",
-      eventLine: "Sept 2024 \u2014 17-year-old freshman Ryan Williams hits a 75-yard spin-move game-winner vs Georgia.",
-      context: "After Georgia erased a 28-0 deficit to lead 34-33 with 2:31 left, the stadium went silent. On the next snap, Milroe hit Williams deep; the 17-year-old spun two defenders into each other and raced 75 yards to retake the lead in the defining moment of the SEC season."
+      video: "https://www.youtube-nocookie.com/embed/dzRRi2QcSEM?start=0",
+      watch: "https://www.youtube.com/watch?v=dzRRi2QcSEM",
+      eventLine: "NFC Divisional, Jan 2018 \u2014 Vikings beat the Saints on a walk-off TD.",
+      context: "Saints safety Marcus Williams whiffed on the tackle, wiping out his own teammate. It was the first game-winning TD as time expired in regulation in NFL playoff history."
     },
     { /* #016 Sony Michel Rose Bowl Walk-Off */
       year: 2018,
@@ -564,7 +564,6 @@
   var MULT = [1.00, 0.85, 0.70, 0.55];  // reveal multiplier (normal mode, unchanged)
 
   var hardMode = false;      // difficulty toggle (display + scoring); separate from daily/random "mode"
-  var hardLockedOut = false;
   function diffMax(){ return hardMode ? MAX_PTS*HARD_X : MAX_PTS; }
 
   /* ---- redaction: ==[name]== reads normally in Normal mode, becomes [Redacted] in Hard ---- */
@@ -662,26 +661,16 @@
 
   /* ---- difficulty toggle ---- */
   function setHard(h){
-    if(h && hardLockedOut) return;
     hardMode = h;
     $("dtNormal").classList.toggle("active", !h);
     $("dtHard").classList.toggle("active", h);
-    $("dtHard").disabled = hardLockedOut || over;
     if(!over){ renderChunks(); renderBug(); }
   }
   function setToggleEnabled(on){
     $("diffToggle").classList.toggle("locked", !on);
-    $("dtHard").disabled = hardLockedOut || !on;
   }
-  $("dtNormal").addEventListener("click",function(){
-    if(!over){
-      hardLockedOut = true;
-      hardMode = false;
-      $("dtHard").disabled = true;
-      setHard(false);
-    }
-  });
-  $("dtHard").addEventListener("click",function(){ if(!over && !hardLockedOut) setHard(true); });
+  $("dtNormal").addEventListener("click",function(){ if(!over) setHard(false); });
+  $("dtHard").addEventListener("click",function(){ if(!over) setHard(true); });
 
   function lockIn(){
     if(over) return;
@@ -776,8 +765,6 @@
     puzzleIdx = idx; mode = m; P = PUZZLES[idx];
     revealed = 1; over = false; score = 0; offBy = 0;
     if(m==="daily"){ revealed = Math.min(loadDailyReveals(), P.chunks.length); }
-    hardLockedOut = false;
-    $("dtHard").disabled = false;
     setHard(true); setToggleEnabled(true);   // default Hard (redacted) so names never flash before the player chooses
     slider.value = 1985; syncReadout();
     $("entry").classList.remove("hidden");
